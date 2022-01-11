@@ -22,21 +22,23 @@ const HomePage = ({ recipes = [] } : HomePageProps) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="row gy-5">
-        <div className="col-12 text-center">
-          <h1>
-            <span className="display-2">Hipp <span style={{fontFamily: "'Baskerville', 'Goudy Old Style', Palatino, 'Book Antiqua', serif", fontStyle: 'italic', fontWeight: 'normal'}}>&</span> Associates</span>
-            <br/>
-            <span className="display-6 text-body">Family Recipes</span>
-          </h1>
-        </div>
+      <div className="text-center mb-5">
+        <h1>
+          <span className="display-2">Hipp <span style={{fontFamily: "'Baskerville', 'Goudy Old Style', Palatino, 'Book Antiqua', serif", fontStyle: 'italic', fontWeight: 'normal'}}>&</span> Associates</span>
+          <br/>
+          <span className="display-6 text-body">Family Recipes</span>
+        </h1>
+      </div>
+      <div className="row row-cols-sm-3 row-cols-md-4 g-3">
           {recipes.map((recipe) => {
             return (
-              <RecipeCard key={recipe.id} recipe={recipe} />
+              <div key={recipe.id} className="col d-flex align-items-stretch">
+                <RecipeCard recipe={recipe} />
+              </div>
             )
           })}
       </div>
-      </div>
+    </div>
   )
 }
 

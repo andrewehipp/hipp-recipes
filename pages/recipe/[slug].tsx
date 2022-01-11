@@ -23,13 +23,30 @@ function RecipePage({
         cooks = [],
         steps = [],
         images = [],
+        images: [
+            featuredImage = {},
+        ] = [],
     } = {}
 }: RecipePageProps) {
     return (
         <div className="container">
-            <div className="row gy-5">
-                <div className="col-6 py-5">
-                    <h1 className="display-3">{name}</h1>
+            {featuredImage.url ? (
+                <Picture
+                    src={featuredImage.url}
+                    title={featuredImage.title}
+                    width={800}
+                    height={800}
+                    fit="thumb"
+                    className="d-block ratio ratio-1x1 d-sm-none"
+                    imgClassName="img-fluid"
+                />    
+            ) : (
+                <div className="ratio ratio-1x1 bg-light d-sm-none" />
+            )}
+
+            <div className="row row-cols-1 row-cols-md-2">
+                <div className="col py-3 py-sm-5">
+                    <h1 className="display-5">{name}</h1>
 
                     {cooks.length ? 
                         <h3 className="lead">
@@ -55,7 +72,7 @@ function RecipePage({
                         </div>
                     </div>
                     <div className="row gy-2">
-                        <div className="col-12">
+                        <div className="col-9">
                             {steps.length ? steps.map(({
                                 id: stepId,
                                 title: stepTitle,
@@ -88,7 +105,7 @@ function RecipePage({
                         </div>          
                     </div>
                 </div>
-                <div className="col-6">
+                <div className="col">
                     {images.length ? images.map(({
                         id: imageId,
                         url: imageUrl,
@@ -102,14 +119,10 @@ function RecipePage({
                                 width={800}
                                 height={800}
                                 fit="thumb"
-                                className="img-fluid"
+                                imgClassName="img-fluid"
                             />    
                         )
                     }) : null}
-                </div>
-
-                <div className="col-12">
-
                 </div>
             </div>
         </div>

@@ -18,23 +18,22 @@ const RecipeCard: React.FC<{
     } = {}
 }) => {
   return (
-        <div  className="d-flex align-items-stretch col-3">
-            <div className="card w-100">
+        <div className="card w-100">
+            {image.url ? (
+                <Picture className="ratio ratio-1x1 bg-light card-img-top" src={image.url} alt={image.title} width={300} height={300} fit="thumb" />
+            ) : (
+                <div className="ratio ratio-1x1 bg-light" />
+            )}
 
-                <div className="ratio ratio-1x1 bg-light">
-                    <Picture className="card-img-top" src={image.url} alt={image.title} width={300} height={300} fit="thumb" />
-                </div>
-
-                <div className="card-body">
-                    <h5 className="card-title">
-                        <Link href={`/recipe/${slug}`}>
-                            <a className="stretched-link">{name}</a>
-                        </Link>
-                    </h5>
-                    <p className="card-text text-truncate">
-                        {description}
-                    </p>
-                </div>
+            <div className="card-body">
+                <h5 className="card-title">
+                    <Link href={`/recipe/${slug}`}>
+                        <a className="stretched-link">{name}</a>
+                    </Link>
+                </h5>
+                <p className="card-text text-truncate">
+                    {description}
+                </p>
             </div>
         </div>
     )

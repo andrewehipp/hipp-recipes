@@ -7,6 +7,7 @@ export type Source = {
 };
 
 export interface PictureProps {
+    imgClassName?: string;
     width?: number;
     height?: number;
     quality?: number;
@@ -40,6 +41,7 @@ const Picture: React.FC<ImgHTMLAttributes<HTMLImageElement> & PictureProps> = ({
     focus,
     loading = 'lazy',
     alt,
+    imgClassName,
     ...props
 }) => {
     if (!src) {
@@ -73,7 +75,7 @@ const Picture: React.FC<ImgHTMLAttributes<HTMLImageElement> & PictureProps> = ({
     const contentfulHighResSrc = `${src}?${highResQueryString}`;
 
     return (
-        <picture>
+        <picture {...props}>
             <source
                 srcSet={`${contentfulHighResSrc}&fm=avif 2x, ${contentfulSrc}&fm=avif 1x`}
                 type='image/avif'
@@ -88,11 +90,11 @@ const Picture: React.FC<ImgHTMLAttributes<HTMLImageElement> & PictureProps> = ({
             <source srcSet={`${contentfulSrc}&fm=webp`} type='image/webp' />
             <img
                 src={contentfulSrc}
-                {...props}
                 width={width}
                 height={height}
                 loading={loading}
                 alt={alt}
+                className={imgClassName}
             />
         </picture>
     );
