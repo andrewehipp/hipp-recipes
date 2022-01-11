@@ -46,6 +46,7 @@ export const getStaticProps: GetStaticProps = async ({ params = {} }) => {
     const { items: recipes = []} = await client.getEntries({
         content_type: 'recipe',
         include: 10,
+        order: 'fields.name'
     })
 
 
