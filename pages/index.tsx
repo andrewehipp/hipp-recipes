@@ -29,7 +29,7 @@ const HomePage = ({ recipes = [] } : HomePageProps) => {
           <span className="display-6 text-body">Family Recipes</span>
         </h1>
       </div>
-      <div className="row row-cols-sm-3 row-cols-md-4 g-3">
+      <div className="row row-cols-2 row-cols-sm-3 row-cols-md-4 g-3">
           {recipes.map((recipe) => {
             return (
               <div key={recipe.id} className="col d-flex align-items-stretch">
