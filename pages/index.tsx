@@ -1,6 +1,7 @@
 import React from 'react';
 import Head from 'next/head'
 import { GetStaticProps } from 'next'
+import { useRouter } from 'next/router';
 
 import client from '../utils/client';
 import { getContentData } from '../utils/extractData';
@@ -14,10 +15,31 @@ export type HomePageProps = {
 }
 
 const HomePage = ({ recipes = [] } : HomePageProps) => {
+  const { push } = useRouter();
+  const randomizer = async () => {
+        // Call an external API endpoint to get posts
+    const { total } = await client.getEntries({
+        content_type: 'recipe',
+        include: 10,
+        limit: 0,
+    });
+
+    const { items: [recipeEntry] } = await client.getEntries({
+      content_type: 'recipe',
+      skip: Math.floor(total * Math.random())
+    });
+
+    const {
+      slug
+    } = getContentData(recipeEntry)
+
+    push(`/recipe/${slug}`);
+  }
+
   return (
     <div className="container py-5">
       <Head>
-        <title>Hipp Recipies</title>
+        <title>Hipp Recipes</title>
         <meta name="description" content="Hipp Family Recipes" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -28,6 +50,7 @@ const HomePage = ({ recipes = [] } : HomePageProps) => {
           <br/>
           <span className="display-6 text-body">Family Recipes</span>
         </h1>
+        <button className="btn btn-danger" onClick={randomizer}>Surprise me :D</button>
       </div>
       <div className="row row-cols-2 row-cols-sm-3 row-cols-md-4 g-3">
           {recipes.map((recipe) => {

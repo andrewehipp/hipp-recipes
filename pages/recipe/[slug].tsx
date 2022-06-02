@@ -20,7 +20,6 @@ function RecipePage({
         ingredients = '',
         estimatedTime = '',
         servings = '',
-        cooks = [],
         steps = [],
         images = [],
         images: [
@@ -30,6 +29,8 @@ function RecipePage({
 }: RecipePageProps) {
     return (
         <>
+            <div className="ratio ratio-1x1 bg-light d-sm-none" />
+
             {featuredImage.url ? (
                 <Picture
                     src={featuredImage.url}
@@ -37,90 +38,90 @@ function RecipePage({
                     width={800}
                     height={800}
                     fit="thumb"
-                    className="d-block ratio ratio-1x1 d-md-none"
+                    className="d-block ratio ratio-1x1 d-md-none fixed-top"
                     imgClassName="img-fluid"
                 />    
-            ) : (
-                <div className="ratio ratio-1x1 bg-light d-sm-none" />
-            )}
+            ) : null}
 
-            <div className="container" style={{ maxWidth: 1000 }}>
-                <div className="row row-cols-1 row-cols-md-2">
-                    <div className="col py-3 py-sm-5">
-                        <h1 className="display-5 mb-1 lh-1">{name}</h1>
-                        <Markdown className="lead mb-5">{description}</Markdown>
+            <div className="bg-white" style={{ position: 'relative', zIndex: 10301 }}>
+                <div className="container" style={{ maxWidth: 1000 }}>
+                    <div className="row row-cols-1 row-cols-md-2">
+                        <div className="col py-3 py-sm-5">
+                            <h1 className="display-5 mb-1 lh-1">{name}</h1>
+                            <Markdown className="lead mb-5">{description}</Markdown>
 
-                        <div className="mb-5">
-                            {estimatedTime ? (
-                                <>
-                                    <h5 className="mb-1">Estimated Time</h5>
-                                    <Markdown>{estimatedTime}</Markdown>
-                                </>
-                            ) : null}
+                            <div className="mb-5">
+                                {estimatedTime ? (
+                                    <>
+                                        <h5 className="mb-1">Estimated Time</h5>
+                                        <Markdown>{estimatedTime}</Markdown>
+                                    </>
+                                ) : null}
 
-                            {servings ? (
-                                <>
-                                    <h5 className="mb-1">Servings</h5>
-                                    <p>{servings}</p>
-                                </>
-                            ) : null}
+                                {servings ? (
+                                    <>
+                                        <h5 className="mb-1">Servings</h5>
+                                        <p>{servings}</p>
+                                    </>
+                                ) : null}
 
-                            {ingredients ? (
-                                <>
-                                    <h5 className="mb-2">Ingredients</h5>
-                                    <Markdown>{ingredients}</Markdown>
-                                </>
-                            ) : null}
+                                {ingredients ? (
+                                    <>
+                                        <h5 className="mb-2">Ingredients</h5>
+                                        <Markdown>{ingredients}</Markdown>
+                                    </>
+                                ) : null}
+                            </div>
+
+                            {steps.length ? steps.map(({
+                                id: stepId,
+                                title: stepTitle,
+                                description: stepDescription,
+                                images: stepImages = []
+                            }, index) => {
+                                return (
+                                    <div key={stepId}>
+                                        {index !== 0 ? <hr /> : null}
+
+                                        <h5>{stepTitle}</h5>
+                                        {stepDescription ? <Markdown>{stepDescription}</Markdown> : null}
+                                        {stepImages.length ? stepImages.map(({
+                                            id: stepImageId,
+                                            url: stepImageUrl,
+                                            title: stepImageTitle,
+                                        }) => {
+                                            return (
+                                                <Picture
+                                                    key={stepImageId}
+                                                    src={stepImageUrl}
+                                                    title={stepImageTitle}
+                                                    width={200}
+                                                />    
+                                            )
+                                        }) : null}
+                                    </div>
+                                )
+                            }) : null}
                         </div>
-
-                        {steps.length ? steps.map(({
-                            id: stepId,
-                            title: stepTitle,
-                            description: stepDescription,
-                            images: stepImages = []
-                        }, index) => {
-                            return (
-                                <div key={stepId}>
-                                    {index !== 0 ? <hr /> : null}
-
-                                    <h5>{stepTitle}</h5>
-                                    {stepDescription ? <Markdown>{stepDescription}</Markdown> : null}
-                                    {stepImages.length ? stepImages.map(({
-                                        id: stepImageId,
-                                        url: stepImageUrl,
-                                        title: stepImageTitle,
-                                    }) => {
-                                        return (
-                                            <Picture
-                                                key={stepImageId}
-                                                src={stepImageUrl}
-                                                title={stepImageTitle}
-                                                width={200}
-                                            />    
-                                        )
-                                    }) : null}
-                                </div>
-                            )
-                        }) : null}
-                    </div>
-                    <div className="col">
-                        {images.length ? images.map(({
-                            id: imageId,
-                            url: imageUrl,
-                            title: imageTitle,
-                            }) => {
-                            return (
-                                <Picture
-                                    key={imageId}
-                                    src={imageUrl}
-                                    title={imageTitle}
-                                    width={800}
-                                    height={800}
-                                    fit="thumb"
-                                    imgClassName="img-fluid"
-                                />    
-                            )
-                        }) : null}
+                        <div className="col">
+                            {images.length ? images.map(({
+                                id: imageId,
+                                url: imageUrl,
+                                title: imageTitle,
+                                }) => {
+                                return (
+                                    <Picture
+                                        key={imageId}
+                                        src={imageUrl}
+                                        title={imageTitle}
+                                        width={800}
+                                        height={800}
+                                        fit="thumb"
+                                        imgClassName="img-fluid"
+                                    />    
+                                )
+                            }) : null}
+                        </div>
                     </div>
                 </div>
             </div>
